@@ -1,0 +1,5 @@
+.dots {
+  transform: translate3d(0, 0, 0);
+  contain: layout paint style;
+  pointer-events: none;
+}

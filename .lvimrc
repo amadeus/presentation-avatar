@@ -1,0 +1,14 @@
+" NOTE: Only source this file once per session
+if g:localvimrc_sourced_once
+  finish
+endif
+echom 'status-demo .lvimrc has been sourced'
+
+let g:ale_linters_ignore = {'javascript': ['tslint', 'tsserver']}
+
+set tabstop=2
+set shiftwidth=2
+set expandtab
+
+let g:ale_fix_on_save = 1
+let g:preserve_whitespace = 1
