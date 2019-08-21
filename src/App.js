@@ -2,15 +2,22 @@
 import React, {useState, useEffect} from 'react';
 import Status, {getStatusColor} from './Status';
 import Avatar, {Sizes} from './Avatar';
+import {animated, useSpring} from 'react-spring';
 import {StatusTypes} from './Constants';
+import styles from './App.module.css';
 
-const STATUSES = Object.values(StatusTypes);
+const STATUSES: any = Object.values(StatusTypes);
 
 type GridProps = {|
   status: any,
   isMobile: boolean,
   isTyping: boolean,
 |};
+
+const SPRING_CONFIG = {
+  tension: 1200,
+  friction: 70,
+};
 
 function StatusGrid({status, isMobile}: GridProps) {
   return (
@@ -77,11 +84,21 @@ function App() {
       document.removeEventListener('keypress', handleKeypress);
     };
   }, []);
-
-  return statusMode ? (
-    <StatusGrid status={status} isMobile={isMobile} isTyping={isTyping} />
-  ) : (
-    <AvatarGrid status={status} isMobile={isMobile} isTyping={isTyping} />
+  const style = useSpring({
+    config: SPRING_CONFIG,
+    to: {
+      backgroundColor: getStatusColor(status),
+    },
+  });
+  return (
+    <>
+      <animated.div className={styles.bg} style={style} />
+      {statusMode ? (
+        <StatusGrid status={status} isMobile={isMobile} isTyping={isTyping} />
+      ) : (
+        <AvatarGrid status={status} isMobile={isMobile} isTyping={isTyping} />
+      )}
+    </>
   );
 }
 
