@@ -28,14 +28,6 @@ export function getStatusColor(status: ?$Values<typeof StatusTypes>): $Values<ty
   }
 }
 
-function getPolygonTransform(size: number, scale: number, topOffset: number, leftOffset: number): string {
-  return `scale(${scale}) translate(${0.5625 * size + leftOffset} ${0.75 * size + topOffset})`;
-}
-
-function getPolygonOrigin(size: number, topOffset: number, leftOffset: number): string {
-  return `${0.5625 * size + leftOffset}px ${0.75 * size + topOffset}px`;
-}
-
 export type StatusValuesProps = {|
   size: number,
   status: $Values<typeof StatusTypes>,
@@ -56,8 +48,6 @@ export type AnimationValues = {|
   cutoutWidth: number,
   cutoutHeight: number,
   cutoutRadius: number,
-  polygonScale: string,
-  polygonOrigin: string,
   dotY: number,
   dotX: number,
   dotRadius: number,
@@ -85,8 +75,6 @@ export function getStatusValues({
       cutoutWidth: 0,
       cutoutHeight: 0,
       cutoutRadius: 0,
-      polygonScale: getPolygonTransform(size, 0, _topOffset, _leftOffset),
-      polygonOrigin: getPolygonOrigin(size, _topOffset, _leftOffset),
       dotY: 0.75 * size + _topOffset,
       dotX: 0.5 * size + _leftOffset,
       dotRadius: 0,
@@ -106,8 +94,6 @@ export function getStatusValues({
           cutoutWidth: 0.75 * size,
           cutoutHeight: 0.75 * size,
           cutoutRadius: 0,
-          polygonScale: getPolygonTransform(size, 0, _topOffset, _leftOffset),
-          polygonOrigin: getPolygonOrigin(size, _topOffset, _leftOffset),
           dotY: 1.25 * size,
           dotX: 0.5 * size + _leftOffset,
           dotRadius: 0.125 * size,
@@ -124,8 +110,6 @@ export function getStatusValues({
           cutoutWidth: 0,
           cutoutHeight: 0,
           cutoutRadius: 0,
-          polygonScale: getPolygonTransform(size, 0, _topOffset, _leftOffset),
-          polygonOrigin: getPolygonOrigin(size, _topOffset, _leftOffset),
           dotY: 0.75 * size + _topOffset,
           dotX: 0.5 * size + _leftOffset,
           dotRadius: 0,
@@ -143,8 +127,6 @@ export function getStatusValues({
         cutoutWidth: 0.75 * size,
         cutoutHeight: 0.75 * size,
         cutoutRadius: 0.375 * size,
-        polygonScale: getPolygonTransform(size, 0, _topOffset, _leftOffset),
-        polygonOrigin: getPolygonOrigin(size, _topOffset, _leftOffset),
         dotY: 0.75 * size + _topOffset,
         dotX: 0.5 * size + _leftOffset,
         dotRadius: 0,
@@ -161,8 +143,6 @@ export function getStatusValues({
         cutoutWidth: 0.75 * size,
         cutoutHeight: 0.25 * size,
         cutoutRadius: 0.125 * size,
-        polygonScale: getPolygonTransform(size, 0, _topOffset, _leftOffset),
-        polygonOrigin: getPolygonOrigin(size, _topOffset, _leftOffset),
         dotY: 0.75 * size + _topOffset,
         dotX: 0.5 * size + _leftOffset,
         dotRadius: 0,
@@ -180,17 +160,11 @@ export function getStatusValues({
         cutoutWidth: 0.5 * size,
         cutoutHeight: 0.5 * size,
         cutoutRadius: 0.25 * size,
-        polygonScale: getPolygonTransform(size, 0, _topOffset, _leftOffset),
-        polygonOrigin: getPolygonOrigin(size, _topOffset, _leftOffset),
         dotY: 0.75 * size + _topOffset,
         dotX: 0.5 * size + _leftOffset,
         dotRadius: 0,
       };
   }
-}
-
-function getPolygonPoints(size: number): string {
-  return `-${0.216506 * size},-${0.25 * size} ${0.216506 * size},0 -${0.216506 * size},${0.25 * size}`;
 }
 
 export function renderStatusMask(
@@ -205,8 +179,6 @@ export function renderStatusMask(
     cutoutWidth,
     cutoutHeight,
     cutoutRadius,
-    polygonScale,
-    polygonOrigin,
     dotY,
     dotX,
     dotRadius,
@@ -225,12 +197,6 @@ export function renderStatusMask(
         rx={cutoutRadius}
         ry={cutoutRadius}
         fill="black"
-      />
-      <animated.polygon
-        points={getPolygonPoints(size)}
-        fill="black"
-        transform={polygonScale}
-        style={{transformOrigin: polygonOrigin}}
       />
       <animated.circle fill="black" cx={dotX} cy={dotY} r={dotRadius} />
     </mask>

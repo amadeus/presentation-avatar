@@ -1,9 +1,3 @@
-.controls {
-  position: fixed;
-  top: 10px;
-  left: 10px;
-}
-
 .bg {
   position: fixed;
   width: 100vw;
