@@ -1,0 +1,102 @@
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  user-select: none;
+  transform: translateZ(0);
+}
+
+.dotBase {
+  width: 16px;
+  height: 16px;
+  background-color: #f71dff;
+  box-shadow: 0 0 0 4px white, 0 2px 4px 4px rgba(0, 0, 0, 0.4);
+  border-radius: 8px;
+  margin-top: -8px;
+  margin-left: -8px;
+}
+
+.tweenExample {
+  width: 600px;
+  padding: 24px;
+  background-color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 16px;
+  border-radius: 4px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.tweenExample {
+  font-size: 12px;
+  line-height: 12px;
+  text-transform: uppercase;
+}
+
+.line {
+  position: relative;
+  height: 4px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
+  margin-top: 32px;
+}
+
+.dot {
+  composes: dotBase;
+  position: absolute;
+  top: 2px;
+}
+
+.item {
+  composes: dotBase;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.button {
+  display: block;
+  appearance: none;
+  border: none;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+  padding: 4px 16px;
+  background-color: rgba(255, 255, 255, 0.9);
+  height: 32px;
+  outline: none;
+  cursor: pointer;
+  border-radius: 16px;
+}
+
+.button:active {
+  transform: translateY(1px);
+}
+
+.selected {
+  background-color: #000;
+  color: white;
+}
+
+.buttons {
+  width: 600px;
+  padding: 0 8px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+  grid-column-gap: 16px;
+  margin-top: 16px;
+}
+
+.box {
+  background-color: #f71dff;
+  padding-bottom: 100%;
+}
