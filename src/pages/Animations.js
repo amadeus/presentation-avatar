@@ -16,72 +16,24 @@ const {innerWidth, innerHeight} = window;
 const WINDOW_MAX = innerWidth + innerHeight;
 
 type LineProps = {|
-  spring: boolean,
+  title: Node,
+  config: {...},
 |};
 
-function Line({spring}: LineProps) {
+function Line({title, config}: LineProps) {
   const [toggle, setToggle] = useState(false);
   const props = useSpring({
-    config: {
-      ...(spring
-        ? null
-        : {
-            easing: quadInOut,
-            duration: 500,
-          }),
-      tension: 100,
-      friction: 20,
-    },
+    config,
     x: toggle ? 552 : 0,
     z: 0,
   });
   return (
     <div className={styles.tweenExample} onClick={() => setToggle(b => !b)}>
-      <h3>Movement Example</h3>
+      <h3>{title}</h3>
       <div className={styles.line}>
         <animated.div className={styles.dot} style={props} />
       </div>
     </div>
-  );
-}
-
-type FollowMouseProps = {|
-  spring: boolean,
-|};
-
-function FollowMouse({spring}: FollowMouseProps) {
-  const ref = useRef();
-  const [props, updateSpring] = useSpring(() => ({x: innerWidth / 2, y: innerHeight / 2}));
-  useEffect(() => {
-    const handleMouseMove = ({pageX: x, pageY: y}: MouseEvent) => {
-      updateSpring({
-        config: {
-          tension: 260,
-          friction: 15,
-          mass: 3,
-          ...(spring
-            ? null
-            : {
-                easing: quadInOut,
-                duration: 500,
-              }),
-        },
-        x: x + FOLLOW_X_OFFSET,
-        y: y + FOLLOW_Y_OFFSET,
-      });
-      const {current} = ref;
-      if (current != null) {
-        current.innerHTML = `x: ${x}\ny: ${y}`;
-      }
-    };
-    document.addEventListener('mousemove', handleMouseMove);
-    return () => void document.removeEventListener('mousemove', handleMouseMove);
-  }, [spring, updateSpring]);
-  return (
-    <>
-      <div ref={ref} className={styles.xy} />
-      <animated.div className={styles.item} style={props} />
-    </>
   );
 }
 
@@ -109,20 +61,10 @@ function ColorWrapper({children}: ColorWrapperProps) {
   );
 }
 
-type BoxProps = {|
-  spring: boolean,
-|};
-
-function Box({spring}: BoxProps) {
+function Box() {
   const [toggle, setToggle] = useState(false);
   const boxStyles = useSpring({
     config: {
-      ...(spring
-        ? null
-        : {
-            easing: quadInOut,
-            duration: 270,
-          }),
       tension: 200,
       friction: 18,
       clamp: true,
@@ -132,7 +74,7 @@ function Box({spring}: BoxProps) {
 
   return (
     <div className={styles.tweenExample} onClick={() => setToggle(b => !b)}>
-      <h3>Morph Example</h3>
+      <h3>Morph Spring Example</h3>
       <div className={styles.row}>
         <animated.div style={boxStyles} className={styles.box} />
         <animated.div style={boxStyles} className={styles.box} />
@@ -144,24 +86,115 @@ function Box({spring}: BoxProps) {
   );
 }
 
-function Animations() {
+type FollowMouseProps = {|
+  spring: boolean,
+|};
+
+function FollowMouse({spring}: FollowMouseProps) {
+  const ref = useRef();
+  const [props, updateSpring] = useSpring(() => ({x: innerWidth / 2, y: innerHeight / 2}));
+  useEffect(() => {
+    const update = (x: number, y: number) => {
+      updateSpring({
+        config: {
+          tension: 260,
+          friction: 15,
+          mass: 3,
+          ...(spring
+            ? null
+            : {
+                easing: quadInOut,
+                duration: 500,
+              }),
+        },
+        x: x + FOLLOW_X_OFFSET,
+        y: y + FOLLOW_Y_OFFSET,
+      });
+      const {current} = ref;
+      if (current != null) {
+        current.innerHTML = `x: ${x}, y: ${y}`;
+      }
+    };
+    const handleMouseMove = ({pageX, pageY}: MouseEvent) => update(pageX, pageY);
+    document.addEventListener('mousemove', handleMouseMove);
+    update(innerWidth / 2, innerHeight / 2);
+    return () => void document.removeEventListener('mousemove', handleMouseMove);
+  }, [spring, updateSpring]);
+  return (
+    <>
+      <button ref={ref} className={classNames(styles.button, styles.xy, styles.cell)} />
+      <animated.div className={styles.chaser} style={props} />
+    </>
+  );
+}
+
+function MouseChaser() {
   const [followMouse, setFollow] = useState(false);
   const [spring, setSpring] = useState(false);
   return (
-    <ColorWrapper>
-      <div className={styles.buttons}>
-        <button className={classNames(styles.button, {[styles.selected]: spring})} onClick={() => setSpring(b => !b)}>
-          {spring ? 'Spring Mode' : 'Tween Mode'}
-        </button>
+    <>
+      <div className={styles.mouseChaser}>
         <button
-          className={classNames(styles.button, {[styles.selected]: followMouse})}
-          onClick={() => setFollow(b => !b)}>
+          className={classNames({
+            [styles.button]: true,
+            [styles.cell]: true,
+            [styles.selected]: followMouse,
+          })}
+          onClick={() =>
+            setFollow(followMouse => {
+              if (followMouse) {
+                setSpring(false);
+                return false;
+              }
+              return true;
+            })
+          }>
           Mouse Chaser
         </button>
+        <button
+          className={classNames({
+            [styles.button]: true,
+            [styles.cell]: true,
+            [styles.selected]: spring,
+          })}
+          onClick={() => setSpring(b => !b)}>
+          {spring ? 'Spring Mode' : 'Tween Mode'}
+        </button>
+        {followMouse ? <FollowMouse spring={spring} /> : null}
       </div>
-      <Line spring={spring} />
-      <Box spring={spring} />
-      {followMouse ? <FollowMouse spring={spring} /> : null}
+    </>
+  );
+}
+
+function Animations() {
+  return (
+    <ColorWrapper>
+      <Line
+        title="Linear Example"
+        config={{
+          duration: 1000,
+          tension: 100,
+          friction: 20,
+        }}
+      />
+      <Line
+        title="Tween Example"
+        config={{
+          easing: quadInOut,
+          duration: 1000,
+          tension: 100,
+          friction: 20,
+        }}
+      />
+      <Line
+        title="Spring Example"
+        config={{
+          tension: 75,
+          friction: 20,
+        }}
+      />
+      <Box />
+      <MouseChaser />
     </ColorWrapper>
   );
 }

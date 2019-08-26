@@ -12,7 +12,7 @@
 .dotBase {
   width: 16px;
   height: 16px;
-  background-color: #f71dff;
+  background-color: #ff1dad;
   box-shadow: 0 0 0 4px white, 0 2px 4px 4px rgba(0, 0, 0, 0.4);
   border-radius: 8px;
   margin-top: -8px;
@@ -23,8 +23,13 @@
   width: 600px;
   padding: 24px;
   background-color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 16px;
+  margin-bottom: 24px;
   border-radius: 4px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 200ms ease-out;
+}
+
+.tweenExample:hover {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
@@ -48,7 +53,7 @@
   top: 2px;
 }
 
-.item {
+.chaser {
   composes: dotBase;
   position: fixed;
   top: 0;
@@ -60,14 +65,13 @@
   appearance: none;
   border: none;
   font-size: 16px;
+  font-weight: bold;
   line-height: 20px;
-  font-weight: 500;
   padding: 4px 16px;
   background-color: rgba(255, 255, 255, 0.9);
   height: 32px;
   outline: none;
   cursor: pointer;
-  border-radius: 16px;
 }
 
 .button:active {
@@ -75,17 +79,14 @@
 }
 
 .selected {
-  background-color: #000;
+  background-color: #ff1dad;
   color: white;
 }
 
-.buttons {
+.mouseChaser {
   width: 600px;
-  padding: 0 8px;
-  margin-bottom: 16px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
 }
 
 .row {
@@ -96,17 +97,24 @@
   margin-top: 16px;
 }
 
+.mouseChaser > .cell:first-of-type {
+  border-radius: 16px 0 0 16px;
+  margin-right: 1px;
+}
+
+.mouseChaser > .cell:last-of-type {
+  border-radius: 0 16px 16px 0;
+  margin-right: 1px;
+}
+
 .box {
-  background-color: #f71dff;
+  background-color: #ff1dad;
   padding-bottom: 100%;
 }
 
 .xy {
-  position: fixed;
-  top: 16px;
-  left: 16px;
   font-family: monospace;
-  font-size: 16px;
-  font-weight: bold;
-  white-space: pre;
+  margin-left: 1px;
+  cursor: default;
+  min-width: 190px;
 }
