@@ -1,0 +1,11 @@
+.grid {
+  flex: 1 1 auto;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  grid-template-columns: 192px 192px 192px 192px 192px;
+  grid-template-rows: 192px 192px 192px;
+  grid-row-gap: 20px;
+  align-items: center;
+  justify-items: center;
+}
