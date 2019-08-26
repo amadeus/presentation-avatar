@@ -1,5 +1,5 @@
 // @flow strict
-import React, {useState, useEffect, type Node} from 'react';
+import React, {useState, useEffect, useRef, type Node} from 'react';
 import classNames from 'classnames';
 import {useSpring, animated} from 'react-spring';
 import styles from './Animations.module.css';
@@ -50,6 +50,7 @@ type FollowMouseProps = {|
 |};
 
 function FollowMouse({spring}: FollowMouseProps) {
+  const ref = useRef();
   const [props, updateSpring] = useSpring(() => ({x: innerWidth / 2, y: innerHeight / 2}));
   useEffect(() => {
     const handleMouseMove = ({pageX: x, pageY: y}: MouseEvent) => {
@@ -68,11 +69,20 @@ function FollowMouse({spring}: FollowMouseProps) {
         x: x + FOLLOW_X_OFFSET,
         y: y + FOLLOW_Y_OFFSET,
       });
+      const {current} = ref;
+      if (current != null) {
+        current.innerHTML = `x: ${x}\ny: ${y}`;
+      }
     };
     document.addEventListener('mousemove', handleMouseMove);
     return () => void document.removeEventListener('mousemove', handleMouseMove);
   }, [spring, updateSpring]);
-  return <animated.div className={styles.item} style={props} />;
+  return (
+    <>
+      <div ref={ref} className={styles.xy} />
+      <animated.div className={styles.item} style={props} />
+    </>
+  );
 }
 
 function getHSLAFromXY(x: number, y: number): string {
