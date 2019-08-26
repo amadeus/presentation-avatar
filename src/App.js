@@ -1,105 +1,51 @@
 // @flow strict
 import React, {useState, useEffect} from 'react';
-import Status, {getStatusColor} from './Status';
-import Avatar, {Sizes} from './Avatar';
-import {animated, useSpring} from 'react-spring';
-import {StatusTypes} from './Constants';
-import styles from './App.module.css';
+import Animations from './pages/Animations';
+import StatusGrid from './pages/StatusGrid';
+import AvatarGrid from './pages/AvatarGrid';
 
-const STATUSES: any = Object.values(StatusTypes);
-
-type GridProps = {|
-  status: any,
-  isMobile: boolean,
-  isTyping: boolean,
+type PageKeysType = {|
+  ANIMATIONS: 'ANIMATIONS',
+  GRID_STATUS: 'GRID_STATUS',
+  GRID_AVATAR: 'GRID_AVATAR',
 |};
 
-const SPRING_CONFIG = {
-  tension: 1200,
-  friction: 70,
-};
+const PageKeys: PageKeysType = Object.freeze({
+  ANIMATIONS: 'ANIMATIONS',
+  GRID_STATUS: 'GRID_STATUS',
+  GRID_AVATAR: 'GRID_AVATAR',
+});
 
-function StatusGrid({status, isMobile}: GridProps) {
-  return (
-    <>
-      {new Array(15).fill(null).map((_, index) => (
-        <Status key={index} status={status} size={128} isMobile={isMobile} />
-      ))}
-    </>
-  );
-}
-
-function AvatarGrid({status, isMobile, isTyping}: GridProps) {
-  return (
-    <>
-      {new Array(15).fill(null).map((_, index) => (
-        <Avatar
-          key={index}
-          fromStatus={status}
-          fromIsMobile={isMobile}
-          fromColor={getStatusColor(status)}
-          src=""
-          status={status}
-          size={Sizes.SIZE_128}
-          isMobile={isMobile}
-          isTyping={isTyping}
-        />
-      ))}
-    </>
-  );
-}
+const Pages: Array<$Values<PageKeysType>> = Object.keys(PageKeys).map(key => PageKeys[key]);
 
 function App() {
-  const [status, setStatus] = useState(StatusTypes.ONLINE);
-  const [isMobile, setMobile] = useState(false);
-  const [isTyping, setTyping] = useState(false);
-  const [statusMode, setMode] = useState(true);
+  const [page, setPage] = useState<$Values<PageKeysType>>(() => PageKeys.ANIMATIONS);
   useEffect(() => {
     const handleKeypress = (event: KeyboardEvent) => {
-      switch (event.key) {
-        case '1':
-        case '2':
-        case '3':
-        case '4': {
-          const statusIndex = parseInt(event.key, 10) - 1;
-          setStatus(STATUSES[statusIndex]);
-          break;
-        }
-        case 'm':
-          setMobile(isMobile => !isMobile);
-          break;
-        case 't':
-          setTyping(isTyping => !isTyping);
-          break;
-        case ' ':
-          setMode(v => !v);
-          return;
-        default:
-          console.log(event);
-          return;
-      }
+      event.key === ' ' &&
+        setPage(page => {
+          const index = Pages.indexOf(page);
+          if (event.shiftKey) {
+            return Pages[index - 1] || Pages[Pages.length - 1];
+          } else {
+            return Pages[index + 1] || Pages[0];
+          }
+        });
     };
     document.addEventListener('keypress', handleKeypress);
-    return () => {
-      document.removeEventListener('keypress', handleKeypress);
-    };
+    return () => void document.removeEventListener('keypress', handleKeypress);
   }, []);
-  const style = useSpring({
-    config: SPRING_CONFIG,
-    to: {
-      backgroundColor: getStatusColor(status),
-    },
-  });
-  return (
-    <>
-      <animated.div className={styles.bg} style={style} />
-      {statusMode ? (
-        <StatusGrid status={status} isMobile={isMobile} isTyping={isTyping} />
-      ) : (
-        <AvatarGrid status={status} isMobile={isMobile} isTyping={isTyping} />
-      )}
-    </>
-  );
+
+  switch (page) {
+    case PageKeys.ANIMATIONS:
+      return <Animations />;
+    case PageKeys.GRID_STATUS:
+      return <StatusGrid />;
+    case PageKeys.GRID_AVATAR:
+      return <AvatarGrid />;
+    default:
+      throw new Error('App.render: Invalid page...');
+  }
 }
 
 export default App;
