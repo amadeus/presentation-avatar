@@ -11,6 +11,7 @@ const SPRING_CONFIG = {
   tension: 1200,
   friction: 70,
 };
+
 function AnimatedBackground({status}: AnimatedBackgroundProps) {
   const style = useSpring({
     config: SPRING_CONFIG,
