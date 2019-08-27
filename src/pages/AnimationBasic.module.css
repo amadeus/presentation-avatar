@@ -16,3 +16,13 @@
   border-radius: 50%;
   box-shadow: 0 0 20px 10px rgba(255, 255, 255, 0.5);
 }
+
+.fps {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  font-size: 800px;
+  color: #000;
+  opacity: 0.2;
+}

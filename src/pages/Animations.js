@@ -88,7 +88,7 @@ function FollowMouse({spring}: FollowMouseProps) {
       });
       const {current} = ref;
       if (current != null) {
-        current.innerHTML = `x: ${x}, y: ${y}`;
+        current.innerHTML = `x: ${String(x).padEnd(4, ' ')} y: ${String(y).padEnd(4, ' ')}`;
       }
     };
     const handleMouseMove = ({pageX, pageY}: MouseEvent) => update(pageX, pageY);

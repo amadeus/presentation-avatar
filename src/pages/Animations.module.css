@@ -104,7 +104,8 @@
 }
 
 .xy {
-  font-family: monospace;
+  font-family: Source Code Pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  white-space: pre;
   margin-left: 1px;
   cursor: default;
   min-width: 190px;
