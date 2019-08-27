@@ -1,16 +1,19 @@
 // @flow strict
 import React, {useState, useEffect} from 'react';
+import AnimationBasic from './pages/AnimationBasic';
 import Animations from './pages/Animations';
 import StatusGrid from './pages/StatusGrid';
 import AvatarGrid from './pages/AvatarGrid';
 
 type PageKeysType = {|
+  ANIMATION_BASIC: 'ANIMATION_BASIC',
   ANIMATIONS: 'ANIMATIONS',
   GRID_STATUS: 'GRID_STATUS',
   GRID_AVATAR: 'GRID_AVATAR',
 |};
 
 const PageKeys: PageKeysType = Object.freeze({
+  ANIMATION_BASIC: 'ANIMATION_BASIC',
   ANIMATIONS: 'ANIMATIONS',
   GRID_STATUS: 'GRID_STATUS',
   GRID_AVATAR: 'GRID_AVATAR',
@@ -19,7 +22,7 @@ const PageKeys: PageKeysType = Object.freeze({
 const Pages: Array<$Values<PageKeysType>> = Object.keys(PageKeys).map(key => PageKeys[key]);
 
 function App() {
-  const [page, setPage] = useState<$Values<PageKeysType>>(() => PageKeys.ANIMATIONS);
+  const [page, setPage] = useState<$Values<PageKeysType>>(() => Pages[0]);
   useEffect(() => {
     const handleKeypress = (event: KeyboardEvent) => {
       event.key === ' ' &&
@@ -37,6 +40,8 @@ function App() {
   }, []);
 
   switch (page) {
+    case PageKeys.ANIMATION_BASIC:
+      return <AnimationBasic />;
     case PageKeys.ANIMATIONS:
       return <Animations />;
     case PageKeys.GRID_STATUS:
