@@ -50,7 +50,7 @@ function Box() {
 
   return (
     <div className={styles.tweenExample} onClick={() => setToggle(b => !b)}>
-      <h3>Morph Spring Example</h3>
+      <h3>Morph Spring</h3>
       <div className={styles.row}>
         <animated.div style={boxStyles} className={styles.box} />
         <animated.div style={boxStyles} className={styles.box} />
@@ -146,7 +146,7 @@ function Animations() {
   return (
     <ColorWrapper>
       <Line
-        title="Linear Example"
+        title="Linear Tween"
         config={{
           duration: 1000,
           tension: 100,
@@ -154,7 +154,7 @@ function Animations() {
         }}
       />
       <Line
-        title="Tween Example"
+        title="Quad Tween"
         config={{
           easing: quadInOut,
           duration: 1000,
@@ -163,7 +163,7 @@ function Animations() {
         }}
       />
       <Line
-        title="Spring Example"
+        title="Spring"
         config={{
           tension: 75,
           friction: 20,
