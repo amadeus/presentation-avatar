@@ -1,39 +1,29 @@
 // @flow strict
 import React, {useEffect} from 'react';
 import {animated, useSpring} from 'react-spring';
+import ColorWrapper from '../common/ColorWrapper';
 import styles from './AnimationBasic.module.css';
 
 const RANGE = 30;
-const FRAMES = 8;
-let INTERVAL = 400;
-const MAIN_COLOR = 'rgba(0, 0, 0, 1)';
-const ALT_COLOR = '#ffffff';
+const FRAMES = 4;
+const MAIN_COLOR = '#ffffff';
 
-function bgFlash(setValues) {
+function animate(setValues: any, i: number) {
+  let interval = i;
   const left = 50 - RANGE / 2;
   const inc = RANGE / (FRAMES * 2);
-  new Array(FRAMES * 2).fill(null).forEach((_, index) => {
-    const type = index % 2;
-    if (type === 0) {
-      setTimeout(() => {
-        setValues({
-          backgroundColor: ALT_COLOR,
-        });
-      }, INTERVAL * index);
-    } else {
-      setTimeout(() => {
-        setValues({
-          left: `${left + inc * index}%`,
-          backgroundColor: MAIN_COLOR,
-        });
-      }, INTERVAL * index);
-    }
+  new Array(FRAMES * 2 + 1).fill(null).forEach((_, index) => {
+    setTimeout(() => {
+      setValues({
+        left: `${left + inc * index}%`,
+      });
+    }, interval * index);
   });
   setTimeout(() => {
-    bgFlash(setValues);
-  }, INTERVAL * FRAMES * 2);
-  if (INTERVAL > 1000 / 60) {
-    INTERVAL = Math.max(1000 / 60, (INTERVAL -= 200));
+    animate(setValues, interval);
+  }, interval * FRAMES * 2 + 2);
+  if (interval > 1000 / 60) {
+    interval = Math.max(1000 / 60, (interval -= 50));
   }
 }
 
@@ -45,13 +35,13 @@ const AnimationBasic = () => {
   }));
 
   useEffect(() => {
-    bgFlash(setValues);
+    animate(setValues, 300);
   }, [setValues]);
 
   return (
-    <div className={styles.bg}>
+    <ColorWrapper opacity={0.4}>
       <animated.div className={styles.circle} style={props} />
-    </div>
+    </ColorWrapper>
   );
 };
 
