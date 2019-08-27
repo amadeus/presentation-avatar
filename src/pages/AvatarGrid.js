@@ -22,6 +22,8 @@ import avatar13 from '../assets/avatar13.png';
 import avatar14 from '../assets/avatar14.png';
 import avatar15 from '../assets/avatar15.png';
 
+import styles from './AvatarGrid.module.css';
+
 const AVATARS = [
   avatar01,
   avatar02,
@@ -47,6 +49,7 @@ function AvatarGrid() {
       <AnimatedBackground status={status} />
       {AVATARS.map(src => (
         <Avatar
+          className={styles.avatar}
           key={src}
           fromStatus={status}
           fromIsMobile={isMobile}
