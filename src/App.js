@@ -1,11 +1,13 @@
 // @flow strict
 import React, {useState, useEffect} from 'react';
+import Intro from './pages/Intro';
 import AnimationBasic from './pages/AnimationBasic';
 import Animations from './pages/Animations';
 import StatusGrid from './pages/StatusGrid';
 import AvatarGrid from './pages/AvatarGrid';
 
 type PageKeysType = {|
+  INTRO: 'INTRO',
   ANIMATION_BASIC: 'ANIMATION_BASIC',
   ANIMATIONS: 'ANIMATIONS',
   GRID_STATUS: 'GRID_STATUS',
@@ -13,6 +15,7 @@ type PageKeysType = {|
 |};
 
 const PageKeys: PageKeysType = Object.freeze({
+  INTRO: 'INTRO',
   ANIMATION_BASIC: 'ANIMATION_BASIC',
   ANIMATIONS: 'ANIMATIONS',
   GRID_STATUS: 'GRID_STATUS',
@@ -40,6 +43,8 @@ function App() {
   }, []);
 
   switch (page) {
+    case PageKeys.INTRO:
+      return <Intro />;
     case PageKeys.ANIMATION_BASIC:
       return <AnimationBasic />;
     case PageKeys.ANIMATIONS:
