@@ -25,11 +25,16 @@ const AnimationBasic = () => {
     let intervalTimer = 0;
     let prevIter = null;
     let prev = 0;
+    let lastFPS = null;
 
     const animate = now => {
       const {current} = ref;
       if (current != null) {
-        current.innerHTML = `${Math.round(1000 / interval)}`;
+        const _fps = Math.round(1000 / interval);
+        if (_fps !== lastFPS) {
+          current.innerHTML = `${_fps}`;
+          lastFPS = _fps;
+        }
       }
       if (prevIter == null) {
         prevIter = now;
