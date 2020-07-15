@@ -52,6 +52,7 @@ const AnimationBasic = () => {
         }
         setValues({
           left: `${left}%`,
+          immediate: true,
         });
         prevIter = now;
       }

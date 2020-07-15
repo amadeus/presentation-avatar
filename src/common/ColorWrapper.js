@@ -30,8 +30,9 @@ function ColorWrapper({children, opacity = 0.2}: ColorWrapperProps) {
   }, []);
   useEffect(() => {
     if (paused) return;
-    const handleMouseMove = ({pageX, pageY}: MouseEvent) =>
-      updateSpring({backgroundColor: getHSLAFromXY(pageX, pageY, opacity)});
+    const handleMouseMove = ({pageX, pageY}: MouseEvent) => {
+      updateSpring({backgroundColor: getHSLAFromXY(pageX, pageY, opacity), immediate: true});
+    };
     document.addEventListener('mousemove', handleMouseMove);
     return () => document.removeEventListener('mousemove', handleMouseMove);
   }, [updateSpring, opacity, paused]);

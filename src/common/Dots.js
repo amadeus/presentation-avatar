@@ -119,25 +119,20 @@ type DotsProps = {|
 |};
 
 const Dots = React.memo<DotsProps>(({dotRadius, x, y, hide = false}) => {
-  const transitions = useTransition(hide, v => (v ? 'true' : 'false'), {
+  const transition = useTransition(hide, {
     ...TRANSITION_PROPS,
+    keys: v => (v ? 'true' : 'false'),
     immediate: !hasFocus(),
   });
-  return transitions.map(({item, key, props: {dotPosition}}) =>
-    !item ? (
-      <svg
-        key={key}
-        x={x}
-        y={y}
-        width={dotRadius * 2 * 3 + (dotRadius / 2) * 2}
-        height={dotRadius * 2}
-        className={styles.dots}>
+  return transition(({dotPosition}, item) => {
+    return !item ? (
+      <svg x={x} y={y} width={dotRadius * 2 * 3 + (dotRadius / 2) * 2} height={dotRadius * 2} className={styles.dots}>
         <animated.g style={{opacity: dotPosition.to(value => Math.min(1, Math.max(value, 0)))}}>
           <AnimatedDots dotRadius={dotRadius} dotPosition={dotPosition} />
         </animated.g>
       </svg>
-    ) : null
-  );
+    ) : null;
+  });
 });
 
 export default Dots;

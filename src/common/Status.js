@@ -223,7 +223,7 @@ const AnimatedStatus = ({status, isMobile = false, size = SIZE, color, className
   ]);
   const props = useSpring({config: SPRING_CONFIG, to});
   const computedColor = color == null ? getStatusColor(status) : color;
-  const {fill} = useSpring({config: SPRING_CONFIG, fill: computedColor}, [computedColor]);
+  const [{fill}] = useSpring({config: SPRING_CONFIG, fill: computedColor}, [computedColor]);
   const width = size;
   const height = Math.ceil(size * MOBILE_HEIGHT_RATIO);
   return (
