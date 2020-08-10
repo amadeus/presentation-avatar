@@ -1,0 +1,213 @@
+.wrapper {
+  position: absolute;
+  width: 200px;
+  top: 10px;
+  left: 10px;
+  padding: 10px 10px 4px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 4px;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  display: flex;
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  opacity: 0.7;
+}
+
+.title span {
+  display: block;
+  flex: 1 1 auto;
+}
+
+.title .expand {
+  position: relative;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+}
+
+.expand:before {
+  position: absolute;
+  content: '';
+  display: block;
+  width: 14px;
+  height: 2px;
+  background-color: #000;
+}
+
+.expand.plus:after {
+  position: absolute;
+  content: '';
+  display: block;
+  width: 14px;
+  height: 2px;
+  background-color: #000;
+  transform: rotate(90deg);
+}
+
+.title:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.baseList {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.baseList li {
+  display: flex;
+  height: 20px;
+  margin-bottom: 4px;
+  line-height: 20px;
+  cursor: pointer;
+  /* background-color: rgba(0, 0, 0, 0.1); */
+}
+
+.baseList small {
+  font-size: 10px;
+  font-weight: normal;
+}
+
+.baseList li span,
+.baseList li code {
+  display: block;
+}
+
+.baseList li span {
+  padding-right: 8px;
+}
+
+.baseList li span {
+  flex: 1 1 auto;
+}
+
+.baseList li code {
+  flex: 0 0 auto;
+}
+
+.baseList .status:hover span {
+  font-weight: bold;
+}
+
+.baseList .selected span {
+  font-weight: bold;
+}
+
+.modeOnline .selected span {
+  color: #42b581;
+}
+
+.modeIdle .selected span {
+  color: #faa619;
+}
+
+.modeDnd .selected span {
+  color: #f04647;
+}
+
+.modeOffline .selected span {
+  color: #747f8d;
+}
+
+.statuses {
+  composes: baseList;
+  padding: 8px 0 4px 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.modifiers {
+  composes: baseList;
+  padding: 8px 0 0 0;
+}
+
+code {
+  padding: 0 4px;
+  background-color: rgba(0, 0, 0, 0.1);
+  font-weight: bold;
+  border-radius: 3px;
+  margin-right: 4px;
+}
+
+.selection {
+  position: absolute;
+  right: 10px;
+  width: 18px;
+  height: 18px;
+  margin-bottom: 0;
+  margin-top: 10px;
+}
+
+.statusIcon {
+  display: block;
+  margin-top: -4px;
+}
+
+.fakeCheck {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 2px rgba(66, 181, 129, 0.4);
+  margin-top: 1px;
+}
+
+.fakeCheckChecked {
+  box-shadow: inset 0 0 0 2px rgba(66, 181, 129, 1);
+}
+
+.fakeCheckChecked:before {
+  content: '';
+  display: block;
+  width: 10px;
+  height: 10px;
+  background-color: rgba(66, 181, 129, 1);
+  border-radius: 50%;
+}
+
+.modeOnline .fakeCheckChecked {
+  box-shadow: inset 0 0 0 2px #42b581;
+}
+
+.modeIdle .fakeCheckChecked {
+  box-shadow: inset 0 0 0 2px #faa619;
+}
+
+.modeDnd .fakeCheckChecked {
+  box-shadow: inset 0 0 0 2px #f04647;
+}
+
+.modeOffline .fakeCheckChecked {
+  box-shadow: inset 0 0 0 2px #747f8d;
+}
+
+.modeOnline .fakeCheckChecked:before {
+  background-color: #42b581;
+}
+
+.modeIdle .fakeCheckChecked:before {
+  background-color: #faa619;
+}
+
+.modeDnd .fakeCheckChecked:before {
+  background-color: #f04647;
+}
+
+.modeOffline .fakeCheckChecked:before {
+  background-color: #747f8d;
+}

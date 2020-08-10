@@ -45,7 +45,7 @@ function useStatusKeyboard(): StatusKeyboardHook {
     };
   }, []);
 
-  return {status, isTyping, isMobile};
+  return {status, isTyping, isMobile, setStatus, setMobile, setTyping};
 }
 
 export default useStatusKeyboard;
