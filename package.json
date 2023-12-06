@@ -6,10 +6,10 @@
     "classnames": "2.2.6",
     "flow-bin": "0.129.0",
     "prettier": "1.18.2",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
     "react-helmet": "5.2.1",
-    "react-scripts": "3.4.1",
+    "react-scripts": "4.0.3",
     "react-spring": "9.0.0-rc.3",
     "uuid": "3.3.3"
   },
@@ -34,5 +34,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "engines": {
+    "node": "16.x"
   }
 }
