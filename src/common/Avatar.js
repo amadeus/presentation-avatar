@@ -3,7 +3,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import {animated, useSpring} from 'react-spring';
-import uuid from 'uuid';
+import {v4} from 'uuid';
 
 import {
   Sizes,
@@ -137,8 +137,8 @@ const Avatar = (props: AnimatedAvatarComponentProps) => {
     tabIndex,
   } = props;
   const [{avatarMask, statusIconMask, fromSpecs}] = React.useState(() => ({
-    avatarMask: uuid.v4(),
-    statusIconMask: uuid.v4(),
+    avatarMask: v4(),
+    statusIconMask: v4(),
     fromSpecs: {
       fill: fromColor,
       ...getAnimatedValues({size, status: fromStatus, isMobile: fromIsMobile, isTyping: false}, disableStatusIcons),

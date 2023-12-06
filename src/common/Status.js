@@ -2,7 +2,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import {animated, useSpring} from 'react-spring';
-import uuid from 'uuid';
+import {v4} from 'uuid';
 import {MOBILE_HEIGHT_RATIO, TYPING_WIDTH_RATIO, MOBILE_ICON_RADIUS, StatusTypes, Colors} from './Constants';
 import styles from './Status.module.css';
 
@@ -214,7 +214,7 @@ type StatusProps = {|
 |};
 
 const AnimatedStatus = ({status, isMobile = false, size = SIZE, color, className, style}: StatusProps) => {
-  const [maskId] = React.useState(() => uuid.v4());
+  const [maskId] = React.useState(() => v4());
   const isMobileOnline = status === StatusTypes.ONLINE && isMobile;
   const to = React.useMemo(() => getStatusValues({size, status, isMobile: isMobileOnline}), [
     size,

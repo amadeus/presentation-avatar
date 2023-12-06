@@ -4,14 +4,15 @@
   "private": true,
   "dependencies": {
     "classnames": "2.2.6",
-    "flow-bin": "0.129.0",
-    "prettier": "1.18.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-helmet": "5.2.1",
-    "react-scripts": "4.0.3",
-    "react-spring": "9.0.0-rc.3",
-    "uuid": "3.3.3"
+    "react-scripts": "5.0.1",
+    "react-spring": "9.7.3",
+    "uuid": "9.0.1"
+  },
+  "devDependencies": {
+    "flow-bin": "0.129.0",
+    "prettier": "1.18.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -36,6 +37,6 @@
     ]
   },
   "engines": {
-    "node": "16.x"
+    "node": "20.x"
   }
 }
